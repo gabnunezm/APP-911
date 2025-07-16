@@ -1,5 +1,15 @@
+// Gabirel Nuñez Medina 2023-1871
+
 import React from 'react';
-import { View, Text, StyleSheet, Image, Button, Alert } from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  Alert,
+  Button,
+  TouchableOpacity,
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export default function EventDetailScreen({ route, navigation }) {
@@ -34,26 +44,75 @@ export default function EventDetailScreen({ route, navigation }) {
     <View style={styles.container}>
       <Text style={styles.title}>{evento.titulo}</Text>
       <Text style={styles.date}>{evento.fecha}</Text>
-      <Text style={styles.desc}>{evento.descripcion}</Text>
-      {evento.foto && <Image source={{ uri: evento.foto }} style={styles.image} />}
-      <View style={styles.buttonGroup}>
-        <Button title="✏️ Editar" onPress={editarEvento} />
-        <Button title="🗑️ Eliminar" onPress={eliminarEvento} color="red" />
+      <Text style={styles.description}>{evento.descripcion}</Text>
+
+      {evento.foto && (
+        <Image source={{ uri: evento.foto }} style={styles.image} />
+      )}
+
+      <View style={styles.buttons}>
+        <TouchableOpacity style={styles.editBtn} onPress={editarEvento}>
+          <Text style={styles.btnText}>✏️ Editar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.deleteBtn} onPress={eliminarEvento}>
+          <Text style={styles.btnText}>🗑️ Eliminar</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 20 },
-  title: { fontSize: 22, fontWeight: 'bold' },
-  date: { color: 'gray', marginBottom: 10 },
-  desc: { fontSize: 16, marginBottom: 20 },
-  image: { width: '100%', height: 250, borderRadius: 10 },
-  buttonGroup: {
+  container: {
+    flex: 1,
+    backgroundColor: '#f4f4f4',
+    padding: 20,
+  },
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 6,
+    color: '#333',
+  },
+  date: {
+    fontSize: 14,
+    color: '#777',
+    marginBottom: 16,
+  },
+  description: {
+    fontSize: 16,
+    color: '#444',
+    marginBottom: 20,
+  },
+  image: {
+    width: '100%',
+    height: 220,
+    borderRadius: 12,
+    marginBottom: 30,
+    backgroundColor: '#ccc',
+  },
+  buttons: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    marginTop: 30,
     gap: 10,
+  },
+  editBtn: {
+    flex: 1,
+    backgroundColor: '#2196F3',
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  deleteBtn: {
+    flex: 1,
+    backgroundColor: '#e53935',
+    paddingVertical: 12,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  btnText: {
+    color: 'white',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });
